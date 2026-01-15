@@ -30,7 +30,7 @@ const contentGroups = ref([
       { date: '18.2024.01', content: '国务院办公厅关于印发新能源汽车产业发展规划(2021-2025年)' },
       { date: '10.2023.06', content: '中华人民共和国网络安全法' },
       { date: '08.2023.06', content: '中华人民共和国数据安全法' },
-      { date: '01.2023.05', content: '中华人民共和国个人信息保护法' }
+      { date: '01.2023.05', content: '中华人民共和国个人信息保护法 ujsbfvhsvfcjbscjvlja csjb jkvbjk cuvbd' }
     ]
   },
   {
@@ -56,17 +56,22 @@ const contentGroups = ref([
 
 <style scoped>
 .container{
-  background-image: url('@/assets/gb2.png');
+  background-image: url('@/assets/bg2.png');
+  width: 1720px;
+  height: 600px;
+
 }
 .content-cards {
   display: flex;
+  position: absolute;
   gap: 1.5rem;
   max-width: 1200px;
   margin: 2rem auto;
+  
 }
 .content-card {
-  flex: 1;
   background: white;
+  flex: 1;
   border: 1px solid #E8E8E8;
   border-radius: 6px;
 	padding: 15px;
