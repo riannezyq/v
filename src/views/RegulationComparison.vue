@@ -172,9 +172,6 @@ onMounted(() => {
   width: 100%;
   background:#E4F1FE;;
 }
-.banner { position:relative; width:100%; height:350px; }
-.banner-bg { width:100%; height:100%; object-fit:cover; }
-.search-section { position:absolute; top:5rem; left:50%; transform:translateX(-50%); width:80%; max-width:900px; }
 
 .breadcrumb {
   max-width: 1200px;

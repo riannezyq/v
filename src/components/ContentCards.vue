@@ -56,17 +56,20 @@ const contentGroups = ref([
 
 <style scoped>
 .container{
+    
   background-image: url('@/assets/bg2.png');
-  width: 1720px;
-  height: 600px;
+  position:relative; 
+  object-fit: cover; 
+  height:420px;
+  
 
 }
 .content-cards {
-  display: flex;
-  position: absolute;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
   gap: 1.5rem;
   max-width: 1200px;
-  margin: 2rem auto;
+  margin: 0 auto 2rem ;
   
 }
 .content-card {
@@ -74,6 +77,7 @@ const contentGroups = ref([
   flex: 1;
   border: 1px solid #E8E8E8;
   border-radius: 6px;
+  margin-top: 30px;
 	padding: 15px;
   height: 100%;
 }

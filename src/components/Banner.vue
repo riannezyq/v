@@ -26,7 +26,7 @@ defineProps({
 </script>
 
 <style scoped>
-.banner { position:relative; width:100%; height:350px; }
+.banner { position:relative; width:100%; height:450px; }
 .banner-bg { width:100%; height:100%; object-fit:cover; }
 .search-section { position:absolute; top:5rem; left:40%; transform:translateX(-50%); width:80%; max-width:900px; }
 .search-bar { display:flex; gap:0.5rem; margin-bottom:0.5rem; }
