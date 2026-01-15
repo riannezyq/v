@@ -55,14 +55,12 @@ const contentGroups = ref([
 </script>
 
 <style scoped>
-.container{
-    
+.container{   
   background-image: url('@/assets/bg2.png');
   position:relative; 
-  object-fit: cover; 
+  object-fit:contain;
+  width:100%;
   height:420px;
-  
-
 }
 .content-cards {
   display: grid;
