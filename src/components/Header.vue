@@ -86,6 +86,7 @@ const toggleLanguage = () => {
   padding: 0 1rem; 
 }
 .logo-area {
+  left: 0%;
   display: flex;
   align-items: center;
   cursor: pointer; 
