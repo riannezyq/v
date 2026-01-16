@@ -5,7 +5,7 @@
     <Banner/>
 
     <div class="breadcrumb">
-      <span ><a href="/Home" style="color: gray; text-decoration: none;" >首页</a></span> >
+      <span ><a href="/Home" style="color: gray; text-decoration: none;" ><img src="@/assets/caselist/dingwei.png" alt=""> 首页</a></span> >
       <span>出口法规监管网络</span> > 
       <span active: style="color: #00509d;">成员国法规对比</span>
     </div>
@@ -19,8 +19,10 @@
           <option value="all">全部</option>
           <option v-for="country in countryList" :value="country">{{ country }}</option>
         </select>
-        <button class="apply-btn" @click="applyFilter">应用筛选</button>
-        <button class="reset-btn" @click="resetFilter">重置</button>
+        <button class="apply-btn" @click="applyFilter">
+           <img src="@/assets/RC/shaixuan.png" alt=""> 应用筛选</button>
+        <button class="reset-btn" @click="resetFilter">
+          <img src="@/assets/RC/chongzhi.png" alt="">重置</button>
       </div>
 
       <div class="table-diagram-container">
@@ -182,6 +184,12 @@ onMounted(() => {
   color: #666;
   padding: 0 1rem;
 }
+  
+img{
+  height: 20px; 
+  width: auto;
+  margin-top: 5px;
+}
 .main-content {
   max-width: 1200px;
   margin: 0 auto;
@@ -209,7 +217,14 @@ onMounted(() => {
 	padding: 0.5rem 1rem;
 	border-radius: 4px;
 	cursor: pointer;
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  gap: 4px;
 }
+.apply-btn img {
+  height: 16px; 
+  width: auto; }
 .reset-btn {
   background: #e6f7ff;
   color: #00509d;
@@ -217,6 +232,14 @@ onMounted(() => {
 	padding: 0.5rem 1rem;
 	border-radius: 4px;
 	cursor: pointer;
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  gap: 4px; 
+}
+.reset-btn img {
+  height: 16px; 
+  width: auto;
 }
 
 .table-diagram-container {
@@ -226,6 +249,7 @@ onMounted(() => {
   padding: 2rem;
   width: 100%;
   display: flex;
+  justify-content: center;
   flex-direction: column;
   gap: 2rem; 
   box-shadow: 0 1px 3px rgba(0,0,0,0.05);
@@ -262,6 +286,7 @@ onMounted(() => {
 .chart-content {
   display: flex;
   justify-content: center;
+  margin: 0 auto 2rem;
   width: 100%;
   height: 600px; 
 }

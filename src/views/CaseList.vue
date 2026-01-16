@@ -1,9 +1,8 @@
 <template>
+  
     <div class="case-list-page">
       <Header />
-  
       <Banner />
-  
       <div class="breadcrumb">
         <img src="@/assets/caselist/dingwei.png" alt="面包屑图标" class="breadcrumb-icon" />
         <span>首页</span> > <span>实施案例</span>
@@ -15,10 +14,10 @@
           <div class="top-actions">
             <button class="action-btn">
               <img src="@/assets/caselist/daochu.png" alt="导出图标" class="action-icon" />
-              导出
+               导出
             </button>
             <button class="action-btn">
-              <img src="@/assets/caselist/daochu.png" alt="切换视图图标" class="action-icon" />
+              <img src="@/assets/caselist/qiehuan.png" alt="切换视图图标" class="action-icon" />
               切换列表视图
             </button>
           </div>
@@ -69,33 +68,33 @@
               </div>
               
               <p class="case-company">
-                <img src="@/assets/caselist/gongsi.png" alt="公司图标" class="company-icon" />
+                <img src="@/assets/caselist/shishi-anli.png" alt="公司图标" class="company-icon" />
                 {{ item.company }}
               </p>
   
               <div class="case-actions">
                 <span class="star-count">
-                  <img src="@/assets/caselist/xingxing.png" alt="收藏星星图标" class="action-small-icon" />
+                  <img src="@/assets/caselist/shoucang1.png" alt="收藏星星图标" class="action-small-icon" />
                   {{ item.star }}
                 </span>
                 <button class="action-link">
-                  <img src="@/assets/caselist/zhiding.png" alt="订阅图标" class="action-small-icon" />
+                  <img src="@/assets/caselist/dingyue.png" alt="订阅图标" class="action-small-icon" />
                   订阅
                 </button>
                 <button class="action-link">
-                  <img src="@/assets/caselist/chaKan.png" alt="查看图标" class="action-small-icon" />
+                  <img src="@/assets/caselist/chakan.png" alt="查看图标" class="action-small-icon" />
                   查看
                 </button>
                 <button class="action-link">
-                  <img src="@/assets/icons/download-icon.png" alt="下载图标" class="action-small-icon" />
+                  <img src="@/assets/caselist/xiazai.png" alt="下载图标" class="action-small-icon" />
                   下载
                 </button>
                 <button class="action-link highlight">
-                  <img src="@/assets/icons/collect-icon.png" alt="收藏图标" class="action-small-icon" />
+                  <img src="@/assets/caselist/shoucang2.png" alt="收藏图标" class="action-small-icon" />
                   收藏
                 </button>
                 <button class="detail-btn">
-                  <img src="@/assets/icons/detail-icon.png" alt="详情图标" class="detail-icon" />
+                  <img src="@/assets/caselist/shishi-panl.png" alt="详情图标" class="detail-icon" />
                   详情查看
                 </button>
               </div>
@@ -106,7 +105,7 @@
         <div class="pagination">
           <span>共6074条</span>
           <button class="page-btn">
-            <img src="@/assets/icons/prev-page-icon.png" alt="上一页图标" class="page-icon" />
+            <img src="@/assets/caselist/gengduo_jiantou1.png" alt="上一页图标" class="page-icon" />
           </button>
           <button class="page-btn active">1</button>
           <button class="page-btn">2</button>
@@ -114,22 +113,23 @@
           <span>...</span>
           <button class="page-btn">10</button>
           <button class="page-btn">
-            <img src="@/assets/icons/next-page-icon.png" alt="下一页图标" class="page-icon" />
+            <img src="@/assets/caselist/gengduo_jiantou3.png" alt="下一页图标" class="page-icon" />
           </button>
           <span>到第 <input type="text" class="page-input" value="1" /> 页</span>
           <button class="page-btn">确定</button>
         </div>
       </main>
-  
       <Footer />
+      
     </div>
+    
   </template>
   
   <script setup>
   import Header from '../components/Header.vue'
   import Banner from '../components/Banner.vue'
   import Footer from '../components/Footer.vue'
-  
+
   import { ref } from 'vue'
   const caseData = ref([
     {
@@ -181,17 +181,6 @@
     background: #f8fbff;
     min-height: calc(100vh - 120px);
   }
-  .banner {
-    position: relative;
-    width: 100%;
-    height: 200px;
-    overflow: hidden;
-  }
-  .banner-bg {
-    width: 100%;
-      height: 100%;
-      object-fit: cover;
-  }
   .breadcrumb {
     max-width: 1200px;
     margin: 1rem auto;
@@ -208,7 +197,6 @@
     padding: 0 1rem 2rem;
   }
   
-  /* ✅ 所有小图标 统一基础样式 (适配你的图标素材，不会拉伸变形) */
   .breadcrumb-icon, .action-icon, .search-icon, .filter-icon, 
   .meta-icon, .company-icon, .action-small-icon, .detail-icon, .page-icon {
     width: 14px;
@@ -220,11 +208,15 @@
   }
   
   .top-bar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    float: right;
+    width: 450px;
+    background: white;
+    border: 1px solid #e6f7ff;
+    border-radius: 6px;
+    padding: 0 1rem;
+    box-shadow: 0 2px 8px rgba(0, 80, 157, 0.06);
+    align-items: right;
     margin-bottom: 1rem;
-    padding: 0.5rem 0;
   }
   .total-count {
     color: #666;
@@ -256,7 +248,7 @@
     background: white;
     border: 1px solid #e6f7ff;
     border-radius: 6px;
-      padding: 1rem;
+    padding: 1rem;
     flex-shrink: 0;
   }
   .sidebar-search {
