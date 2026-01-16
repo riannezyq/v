@@ -5,7 +5,9 @@
     <Banner/>
 
     <div class="breadcrumb">
-      <span>首页</span> > <span>出口法规监管网络</span> > <span>成员国法规对比</span>
+      <span ><a href="/Home" style="color: gray; text-decoration: none;" >首页</a></span> >
+      <span>出口法规监管网络</span> > 
+      <span active: style="color: #00509d;">成员国法规对比</span>
     </div>
 
     <main class="main-content">

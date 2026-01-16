@@ -1,27 +1,29 @@
 <template>
   <div class="service-nav">
-    <div 
+    <RouterLink 
       class="nav-item" 
       v-for="(item, idx) in serviceNavItems" 
-      :key="idx"
-      @click="selectNavItem(item.name)"
+      :key="item.id" 
+      :to="item.path" 
       :class="{ active: activeNavItem === item.name }"
+      @click="selectNavItem(item.name)"
     >
-      <div class="icon"><img src="@/assets/jianguan.png" alt="" class="jianguan"></div>
+      <div class="icon"><img src="@/assets/jianguan.png" alt="" class="jianguan"></div> 
       <span>{{ item.name }}</span>
-    </div>
+    </RouterLink>
   </div>
 </template>
 
 <script setup>
 import { ref } from 'vue'
+import { RouterLink } from 'vue-router'
 
 const serviceNavItems = ref([
-  { name: '国别法规' },
-  { name: '国际条约' },
-  { name: '数据指南' },
-  { name: '实施案例' },
-  { name: '出口法规监管网络' }
+  { id: 1, name: '国别法规'},
+  { id: 2, name: '国际条约'},
+  { id: 3, name: '数据指南'},
+  { id: 4, name: '实施案例', path: '/CaseList' },
+  { id: 5, name: '出口法规监管网络', path: '/RegulationComparison'}
 ])
 const activeNavItem = ref('国别法规')
 
@@ -46,12 +48,12 @@ const selectNavItem = (name) => {
   gap: 0.3rem;
   cursor: pointer;
   color: #333;
-}
+  text-decoration: none; 
+ }
 .nav-item.active {
   color: #00509d;
   font-weight: 600;
 }
-
 .nav-item.active .icon {
   background: transparent;
   color: white;
