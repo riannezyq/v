@@ -74,6 +74,7 @@ const countryList = ref([])
 const selectedCountry = ref("all")
 const categoryList = ref([])
 const tableData = ref([])
+const originalTableData = ref([]) 
 
 const api = axios.create({
   baseURL: 'http://localhost:8080/api',
@@ -89,6 +90,7 @@ onMounted(async () => {
 
   const tableRes = await api.get('/regulation/stats')
   tableData.value = tableRes.data
+  originalTableData.value = tableRes.data
 
   const chart = echarts.init(document.getElementById('networkChart'))
   const option = {
@@ -130,9 +132,20 @@ onMounted(async () => {
 
 const applyFilter = () => {
   console.log("筛选国家:", selectedCountry.value)
+  const filterCountry = selectedCountry.value
+  
+  if (filterCountry === "all") {
+    // Select "全部" → show all original data
+    tableData.value = originalTableData.value
+  } else {
+    tableData.value = originalTableData.value.filter(item => {
+      return item.country === filterCountry
+    })
+  }
 }
 const resetFilter = () => {
   selectedCountry.value = "all"
+  tableData.value = originalTableData.value // Reset table to show all data
 }
 </script>
 
