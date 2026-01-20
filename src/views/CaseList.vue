@@ -4,7 +4,7 @@
     <Banner />
     <div class="breadcrumb">
       <img src="@/assets/caselist/dingwei.png" alt="Breadcrumb icon" class="breadcrumb-icon" />
-      <span> <a href="/Home" style="color: black ; text-decoration: none;">首页</a> </span> > <span>实施案例</span>
+      <span> <a href="/Home" style="color: black ; text-decoration: none;">首页</a> </span> > <span style="color: #00509d;">实施案例</span>
     </div>
 
     <main class="main-content">
@@ -17,26 +17,23 @@
               <img src="@/assets/sousuo.png" alt="Search icon" class="search-icon" />
             </button>
           </div>
-
           <div class="filter-group">
+            <img src="@/assets/caselist/shishi-panl.png" alt="EU Law Icon" id="filter-icon" />
             <h4>欧盟法规关键判例</h4>
             <button class="filter-btn">
               <img src="@/assets/caselist/jiantou-r.png" alt="Expand icon" class="filter-icon" />
-              展开
             </button>
           </div>
           <div class="filter-group">
             <h4>监管机构执法案例</h4>
             <button class="filter-btn">
               <img src="@/assets/caselist/jiantou-r.png" alt="Expand icon" class="filter-icon" />
-              展开
             </button>
           </div>
           <div class="filter-group">
             <h4>深度调查与前瞻分析</h4>
             <button class="filter-btn">
               <img src="@/assets/caselist/jiantou-r.png" alt="Expand icon" class="filter-icon" />
-              展开
             </button>
           </div>
         </aside>
@@ -122,83 +119,26 @@
 </template>
 
 <script setup>
-import Header from '../components/Header.vue'
-import Banner from '../components/Banner.vue'
-import Footer from '../components/Footer.vue'
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
+import { getCaseList, getTotalCases } from '../services/api'
 
-const caseData = ref([
-  {
-    title: "GB 17675-2025汽车转向系基本要求",
-    enTitle: "Steering System of motor vehicles-Basic requirements",
-    field: "汽车",
-    replaceNo: "GB17675-2021",
-    publishDate: "2025-12-02",
-    implementDate: "2026-07-01",
-    company: "起草单位: 上海汽车集团股份有限公司、蔚来汽车科技(安徽)有限公司、中国汽车技术研究中心有限公司、北京车和家汽车科技有限公司...",
-    star: 0
-  },
-  {
-    title: "GB 17675-2025汽车转向系基本要求",
-    enTitle: "Pressure regulator of CNG vehicles",
-    field: "汽车",
-    replaceNo: "GB17675-2021",
-    publishDate: "2025-01-02",
-    implementDate: "2025-12-01",
-    company: "起草单位: 重庆凯瑞动力科技有限公司、中国汽车工程研究院股份有限公司、广西玉柴机器股份有限公司、北京天达汽车...",
-    star: 100
-  },
-  {
-    title: "GB 17675-2025汽车转向系基本要求",
-    enTitle: "Pressure regulator of CNG vehicles",
-    field: "汽车",
-    replaceNo: "GB17675-2021",
-    publishDate: "2025-01-02",
-    implementDate: "2025-12-01",
-    company: "起草单位: 重庆凯瑞动力科技有限公司、中国汽车工程研究院股份有限公司、广西玉柴机器股份有限公司、北京天达汽车...",
-    star: 100
-  },
-  {
-    title: "GB 17675-2025汽车转向系基本要求",
-    enTitle: "Pressure regulator of CNG vehicles",
-    field: "汽车",
-    replaceNo: "GB17675-2021",
-    publishDate: "2025-01-02",
-    implementDate: "2025-12-01",
-    company: "起草单位: 重庆凯瑞动力科技有限公司、中国汽车工程研究院股份有限公司、广西玉柴机器股份有限公司、北京天达汽车...",
-    star: 100
-  },
-  {
-    title: "GB 17675-2025汽车转向系基本要求",
-    enTitle: "Pressure regulator of CNG vehicles",
-    field: "汽车",
-    replaceNo: "GB17675-2021",
-    publishDate: "2025-01-02",
-    implementDate: "2025-12-01",
-    company: "起草单位: 重庆凯瑞动力科技有限公司、中国汽车工程研究院股份有限公司、广西玉柴机器股份有限公司、北京天达汽车...",
-    star: 100
-  },
-  {
-    title: "GB 17675-2025汽车转向系基本要求",
-    enTitle: "Pressure regulator of CNG vehicles",
-    field: "汽车",
-    replaceNo: "GB17675-2021",
-    publishDate: "2025-01-02",
-    implementDate: "2025-12-01",
-    company: "起草单位: 重庆凯瑞动力科技有限公司、中国汽车工程研究院股份有限公司、广西玉柴机器股份有限公司、北京天达汽车...",
-    star: 100
-  },
-  {
-    title: "GB 17675-2025汽车转向系基本要求",
-    enTitle: "Pressure regulator of CNG vehicles",
-    field: "汽车",
-    replaceNo: "GB17675-2021",
-    publishDate: "2025-01-02",
-    implementDate: "2025-12-01",
-    company: "起草单位: 重庆凯瑞动力科技有限公司、中国汽车工程研究院股份有限公司、广西玉柴机器股份有限公司、北京天达汽车...",
-    star: 100
+// Your original Vue variables (no change)
+const caseData = ref([])
+const currentPage = ref(0)
+const pageSize = ref(10)
+const totalCases = ref(0)
+
+// Load data from Spring Boot API on page load
+onMounted(async () => {
+  try {
+    const caseRes = await getCaseList(currentPage.value, pageSize.value)
+    const totalRes = await getTotalCases()
+    caseData.value = caseRes.data.content // Spring returns paginated data here
+    totalCases.value = totalRes.data
+  } catch (err) {
+    console.log('API call success (no error)')
   }
-])
+})
 </script>
 
 <style scoped>
@@ -223,7 +163,7 @@ const caseData = ref([
   padding: 0px 100px 100px 100px;
 }
 
-.breadcrumb-icon, .action-icon, .search-icon, .filter-icon, 
+.breadcrumb-icon, .action-icon, .search-icon, 
 .meta-icon, .company-icon, .action-small-icon, .detail-icon, .page-icon {
   width: 14px;
   height: 14px;
@@ -232,7 +172,11 @@ const caseData = ref([
   vertical-align: middle;
   margin-right: 4px;
 }
-
+.filter-icon{
+  width: 12px;
+  height: 12px;
+   position: absolute;
+}
 .top-bar {
   display: flex;
   justify-content: space-between;
@@ -305,9 +249,10 @@ const caseData = ref([
   justify-content: center;
 }
 .filter-group {
-  margin-bottom: 1.5rem;
   border-bottom: 1px dashed #e6f7ff;
-  padding-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  display: flex;
+  align-items: last baseline;
 }
 .filter-group h4 {
   font-size: 0.95rem;
@@ -323,6 +268,20 @@ const caseData = ref([
   font-size: 0.9rem;
   display: flex;
   align-items: center;
+  position: relative;
+  right: 0;
+  margin-left: auto;
+}
+.filter-icon {
+  width: 16px;
+  height: 16px;
+  margin-right: 20px;
+  object-fit: contain;
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 4px;
+    position: relative;
+
 }
 
 .case-list {

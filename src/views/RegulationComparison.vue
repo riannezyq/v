@@ -68,30 +68,65 @@ import Footer from '../components/Footer.vue'
 import { ref, onMounted } from 'vue'
 import * as echarts from 'echarts'
 import Banner from '@/components/Banner.vue'
+import axios from 'axios'
 
-const countryList = ref([
-  "United Kingdom", "Germany", "Italy", "The Netherlands", 
-  "Spain", "Singapore", "Malaysia", "United Arab Emirates",
-  "Argentina", "Philippines"
-])
+const countryList = ref([])
 const selectedCountry = ref("all")
+const categoryList = ref([])
+const tableData = ref([])
 
-const categoryList = ref([
-  "法规类别1", "法规类别2", "法规类别3", "法规类别4", 
-  "法规类别5", "法规类别6", "法规类别7"
-])
-const tableData = ref([
-  { country: "United Kingdom", values: [2, 3, 2, 6, 10, 8, 15] },
-  { country: "Germany", values: [2, 3, 2, 6, 10, 8, 15] },
-  { country: "Italy", values: [2, 3, 2, 6, 10, 8, 15] },
-  { country: "The Netherlands", values: [2, 3, 2, 6, 10, 8, 15] },
-  { country: "Spain", values: [2, 3, 2, 156, 10, 8, 15] },
-  { country: "Singapore", values: [2, 3, 2, 6, 10, 8, 15] },
-  { country: "Malaysia", values: [2, 3, 2, 6, 10, 8, 15] },
-  { country: "United Arab Emirates", values: [2, 3, 2, 6, 10, 8, 15] },
-  { country: "Argentina", values: [2, 3, 2, 6, 10, 8, 15] },
-  { country: "Philippines", values: [2, 3, 2, 6, 10, 8, 15] }
-])
+const api = axios.create({
+  baseURL: 'http://localhost:8080/api',
+  timeout: 10000
+})
+
+onMounted(async () => {
+  const countryRes = await api.get('/regulation/countries')
+  countryList.value = countryRes.data
+  
+  const cateRes = await api.get('/regulation/categories')
+  categoryList.value = cateRes.data
+
+  const tableRes = await api.get('/regulation/stats')
+  tableData.value = tableRes.data
+
+  const chart = echarts.init(document.getElementById('networkChart'))
+  const option = {
+    backgroundColor: 'transparent', 
+    tooltip: { trigger: 'item', formatter: '{b}: {c}' },
+    series: [{
+      type: 'graph', layout: 'force',
+      force: { repulsion: 1000, edgeLength: 200, gravity: 0.05, layoutAnimation: false },
+      roam: false,
+      label: { show: true, position: 'outside', formatter: '{b}', fontSize: 12, fontWeight: 500, color: '#333' },
+      edgeSymbol: ['none', 'arrow'], edgeSymbolSize: [4, 10],
+      data: [
+        { name: 'Germany', value: 'Germany', symbolSize: 80, itemStyle: { color: '#9ddc69', borderRadius: 50 } },
+        { name: '特殊数据治理', value: 6, symbolSize: 50, itemStyle: { color: '#6b7280' } },
+        { name: '数据服务与价值管理', value: 18, symbolSize: 50, itemStyle: { color: '#9333ea' } },
+        { name: '数据跨境保护与冲突', value: 26, symbolSize: 50, itemStyle: { color: '#3b82f6' } },
+        { name: '数据市场与平台治理', value: 18, symbolSize: 50, itemStyle: { color: '#ec4899' } },
+        { name: '灾害管理与救援监管', value: 8, symbolSize: 50, itemStyle: { color: '#f59e0b' } },
+        { name: '网络安全合规性', value: 156, symbolSize: 50, itemStyle: { color: '#10b981' } },
+        { name: '数据保护与隐私', value: 24, symbolSize: 50, itemStyle: { color: '#f97316' } },
+        { name: '产品与市场准入', value: 16, symbolSize: 50, itemStyle: { color: '#38bdf8' } }
+      ],
+      links: [
+        { source: 'Germany', target: '特殊数据治理' },
+        { source: 'Germany', target: '数据服务与价值管理' },
+        { source: 'Germany', target: '数据跨境保护与冲突' },
+        { source: 'Germany', target: '数据市场与平台治理' },
+        { source: 'Germany', target: '灾害管理与救援监管' },
+        { source: 'Germany', target: '网络安全合规性' },
+        { source: 'Germany', target: '数据保护与隐私' },
+        { source: 'Germany', target: '产品与市场准入' }
+      ],
+      lineStyle: { opacity: 0.9, width: 2, curveness: 0.3, color: '#ccc' }
+    }]
+  }
+  chart.setOption(option)
+  window.addEventListener('resize', () => chart.resize())
+})
 
 const applyFilter = () => {
   console.log("筛选国家:", selectedCountry.value)
@@ -99,76 +134,6 @@ const applyFilter = () => {
 const resetFilter = () => {
   selectedCountry.value = "all"
 }
-
-onMounted(() => {
-  const chart = echarts.init(document.getElementById('networkChart'))
-  
-  const option = {
-    backgroundColor: 'transparent', 
-    tooltip: {
-      trigger: 'item',
-      formatter: '{b}: {c}'
-    },
-    series: [
-      {
-        type: 'graph',
-        layout: 'force',
-        force: {
-          repulsion: 1000,    
-          edgeLength: 200,    
-          gravity: 0.05,      
-          layoutAnimation: false 
-        },
-        roam: false,
-        label: {
-          show: true,
-          position: 'outside', 
-          formatter: '{b}',
-          fontSize: 12,
-          fontWeight: 500,
-          color: '#333'
-        },
-        edgeSymbol: ['none', 'arrow'],
-        edgeSymbolSize: [4, 10],
-        data: [
-          {
-            name: 'Germany',
-            value: 'Germany',
-            symbolSize: 80,
-            itemStyle: { color: '#9ddc69', borderRadius: 50 }
-          },
-          { name: '特殊数据治理', value: 6, symbolSize: 50, itemStyle: { color: '#6b7280' } },
-          { name: '数据服务与价值管理', value: 18, symbolSize: 50, itemStyle: { color: '#9333ea' } },
-          { name: '数据跨境保护与冲突', value: 26, symbolSize: 50, itemStyle: { color: '#3b82f6' } },
-          { name: '数据市场与平台治理', value: 18, symbolSize: 50, itemStyle: { color: '#ec4899' } },
-          { name: '灾害管理与救援监管', value: 8, symbolSize: 50, itemStyle: { color: '#f59e0b' } },
-          { name: '网络安全合规性', value: 156, symbolSize: 50, itemStyle: { color: '#10b981' } },
-          { name: '数据保护与隐私', value: 24, symbolSize: 50, itemStyle: { color: '#f97316' } },
-          { name: '产品与市场准入', value: 16, symbolSize: 50, itemStyle: { color: '#38bdf8' } }
-        ],
-        links: [
-          { source: 'Germany', target: '特殊数据治理' },
-          { source: 'Germany', target: '数据服务与价值管理' },
-          { source: 'Germany', target: '数据跨境保护与冲突' },
-          { source: 'Germany', target: '数据市场与平台治理' },
-          { source: 'Germany', target: '灾害管理与救援监管' },
-          { source: 'Germany', target: '网络安全合规性' },
-          { source: 'Germany', target: '数据保护与隐私' },
-          { source: 'Germany', target: '产品与市场准入' }
-        ],
-        lineStyle: {
-          opacity: 0.9,
-          width: 2,
-          curveness: 0.3,
-          color: '#ccc'
-        }
-      }
-    ]
-  }
-  
-  chart.setOption(option)
-  window.addEventListener('resize', () => chart.resize())
-})
 </script>
 
 <style scoped>
@@ -246,7 +211,7 @@ img{
   background: white;
   border: 1px solid #e6f7ff;
   border-radius: 6px;
-  padding: 2rem;
+	padding: 2rem;
   width: 100%;
   display: flex;
   justify-content: center;
