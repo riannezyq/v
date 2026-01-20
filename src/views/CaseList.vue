@@ -59,11 +59,11 @@
             <p class="case-en-title">{{ item.enTitle }}</p>
             
             <div class="case-meta">
-              <span>标准领域: {{ item.field }}</span>
-              <span>代替标准编号: {{ item.replaceNo }}</span>
-              <span>发布日期: {{ item.publishDate }}</span>
-              <span>实施日期: {{ item.implementDate }}</span>
-            </div>
+                <span>标准领域: {{ item.standard_field }}</span>
+                <span>代替标准编号: {{ item.replace_standard_no }}</span>
+                <span>发布日期: {{ item.publish_date }}</span>
+                <span>实施日期: {{ item.implement_date }}</span>
+</div>
             
             <p class="case-company">
               {{ item.company }}
@@ -119,21 +119,23 @@
 </template>
 
 <script setup>
+import Header from '../components/Header.vue'
+import Footer from '../components/Footer.vue'
+import Banner from '@/components/Banner.vue'
+
 import { ref, onMounted } from 'vue'
 import { getCaseList, getTotalCases } from '../services/api'
 
-// Your original Vue variables (no change)
 const caseData = ref([])
 const currentPage = ref(0)
 const pageSize = ref(10)
 const totalCases = ref(0)
 
-// Load data from Spring Boot API on page load
 onMounted(async () => {
   try {
     const caseRes = await getCaseList(currentPage.value, pageSize.value)
     const totalRes = await getTotalCases()
-    caseData.value = caseRes.data.content // Spring returns paginated data here
+    caseData.value = caseRes.data.content 
     totalCases.value = totalRes.data
   } catch (err) {
     console.log('API call success (no error)')
