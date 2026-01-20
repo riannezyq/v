@@ -135,7 +135,6 @@ const applyFilter = () => {
   const filterCountry = selectedCountry.value
   
   if (filterCountry === "all") {
-    // Select "全部" → show all original data
     tableData.value = originalTableData.value
   } else {
     tableData.value = originalTableData.value.filter(item => {
