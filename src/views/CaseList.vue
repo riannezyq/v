@@ -91,7 +91,7 @@
                 <img src="@/assets/caselist/shoucang2.png" alt="Collect icon" class="action-small-icon" />
                 收藏
               </button>
-              <button class="detail-btn" @click="window.location.href=`/standard-detail/${item.case_id}`">
+              <button class="detail-btn" @click="StandardDetail">
                 详情查看
               </button>
             </div>
@@ -142,6 +142,9 @@ onMounted(async () => {
     console.log('API call success (no error)')
   }
 })
+const StandardDetail = () => {
+  window.location.href = '/StandardDetail'
+}
 </script>
 
 <style scoped>

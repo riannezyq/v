@@ -4,6 +4,7 @@ import RegulationComparison from '../views/RegulationComparison.vue'
 import CaseList from '../views/CaseList.vue'
 import StandardDetail from '../views/StandardDetail.vue'
 
+
 const routes = [
    { path: '/', redirect:'/Home' },
   { path: '/Home', component: Home },

@@ -9,4 +9,5 @@ export const getCategories = () => api.get('/regulation/categories')
 export const getRegulationStats = () => api.get('/regulation/stats')
 export const getCaseList = (page, size) => api.get(`/case/list`, { params: { page, size } })
 export const getTotalCases = () => api.get('/case/total')
+export const getStandardDetail = (title) => api.get(`/standard/detail/${encodeURIComponent(title)}`)
 export default api
