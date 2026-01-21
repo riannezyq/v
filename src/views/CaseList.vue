@@ -41,7 +41,7 @@
 
         <div class="case-list">
           <div class="top-bar">
-        <span class="total-count">共 6674 条查询结果</span>
+        <span class="total-count">共 <span>{{ totalCases }}</span> 条查询结果</span>
         <div class="top-actions">
           <button class="action-btn">
             <img src="@/assets/caselist/daochu.png" alt="Export icon" class="action-icon" />
@@ -55,24 +55,25 @@
       </div>
 
           <div class="case-item" v-for="(item, idx) in caseData" :key="idx">
-            <h3 class="case-title">{{ item.title }}</h3>
-            <p class="case-en-title">{{ item.enTitle }}</p>
-            
+            <h3 class="case-title">{{ item.caseTitleCn }}</h3>
+            <p class="case-en-title">{{ item.caseTitleEn }}</p>
+
             <div class="case-meta">
-                <span>标准领域: {{ item.standard_field }}</span>
-                <span>代替标准编号: {{ item.replace_standard_no }}</span>
-                <span>发布日期: {{ item.publish_date }}</span>
-                <span>实施日期: {{ item.implement_date }}</span>
-</div>
+                <span>{{ item.case_id }}</span>
+                <span>标准领域: {{ item.standardField }}</span>
+                <span>代替标准编号: {{ item.replaceStandardNo }}</span>
+                <span>发布日期: {{ item.publishDate }}</span>
+                <span>实施日期: {{ item.implementDate }}</span>
+            </div>
             
             <p class="case-company">
-              {{ item.company }}
+              {{ item.draftingCompany }}
             </p>
 
             <div class="case-actions">
               <span class="star-count">
                 <img src="@/assets/caselist/shoucang1.png" alt="Star icon" class="action-small-icon" />
-                {{ item.star }}
+                {{ item.star_count }}
               </span>
               <button class="action-link">
                 <img src="@/assets/caselist/dingyue.png" alt="Subscribe icon" class="action-small-icon" />
@@ -90,7 +91,7 @@
                 <img src="@/assets/caselist/shoucang2.png" alt="Collect icon" class="action-small-icon" />
                 收藏
               </button>
-              <button class="detail-btn">
+              <button class="detail-btn" @click="window.location.href=`/standard-detail/${item.case_id}`">
                 详情查看
               </button>
             </div>
